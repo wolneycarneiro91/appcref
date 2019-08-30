@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html>
+    <head>	
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />		
+		<!-- IONIC -->
+	<!--script src="https://unpkg.com/@ionic/core@latest/dist/ionic.js"></script>
+		<link href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" rel="stylesheet"-->
+		<script type='text/javascript' src="/core/dist/ionic.js"></script>
+		<link rel="stylesheet" href="/core/css/ionic.bundle.css">		
+														
+		<!--JQUERY-MOBILE-->	
+        <script type="text/javascript" src="js/plugins/jquery/jquery-2.2.1.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="js/plugins/long-press-event.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+				
+		<!--TITLE-->
+        <title>App Cref</title>
+		  
+  </head>
+  <body onload="waitForDeviceReady()">  
+ <ion-app>	
+  <!--MENU-->
+  <ion-menu side="start" menu-id="first" type="overlay" auto-hide>
+	  <ion-header>
+	  <ion-toolbar color="secondary">
+		<ion-title>Menu</ion-title>
+	  </ion-toolbar>
+	</ion-header>
+	<ion-content>
+	  <ion-list>
+		<ion-item></ion-icon><ion-icon name="contact"></ion-icon><ion-menu-button onclick="window.location.href='#cadastrar_perfil';"> PERFIL</ion-menu-button> </ion-item>		    		    
+		<ion-item><ion-icon name="home"></ion-icon><ion-menu-button  onclick="window.location.href='#pgn_lista_estabelecimento';">ESTABELECIMENTO</ion-menu-button></ion-item>
+		<ion-item><ion-icon name="save"></ion-icon><ion-menu-button  onclick="window.location.href='#pgn_backup';">BACKUP</ion-menu-button></ion-item>
+		<ion-item><ion-icon name="download"></ion-icon><ion-menu-button  id="idOfElement" >EXPORTAR PARA EXCEL</ion-menu-button></ion-item>		
+		<ion-item><ion-icon name="book"></ion-icon><ion-menu-button  >MANUAL</ion-menu-button></ion-item>
+		<ion-item><ion-icon name="information-circle"></ion-icon><ion-menu-button  onclick="window.location.href='#pgn_sobre';">SOBRE</ion-menu-button></ion-item>
+		<ion-item><ion-icon name="log-out"></ion-icon><ion-menu-button  onclick="sair()">SAIR</ion-menu-button></ion-item>
+	  </ion-list>
+	</ion-content>
+  </ion-menu>
+  
+  <!--PARA PAGINA PRINCIPAL--> 
+	  <div class="ion-page" main>
+	   
+		<ion-header>
+		  <ion-toolbar color="secondary">
+			<ion-title><font size ="2">Avaliação Pré Participação</font></ion-title>
+		  </ion-toolbar>
+		</ion-header>
+	  </div>
+
+	  <!-- PAGINA LOGIN -->
+	  <div id="pgn_login"  data-role="page" >		 
+		  <ion-content fullscreen=""   >
+		  		<br/><br/><br/><br/>
+				<center>  <ion-img style=" width: 50%" src="img/appcref.jpeg" ></ion-img></center>
+				<br/><br/>
+		  		<input class="inputtext" type="text" id="txt_logar" name="txt_logar" value="BA-" style="border: 1px black solid; text-align: center;">
+		  		<br/>
+		   		<section>
+					<ion-button color="secondary" expand="block" id="btn_login">Confirmar</ion-button>	
+		  		</section>	
+		  </ion-content>
+	  </div>
+	  
+ <!-- PAGINA EDITAR CLIENTE -->	  
+  <div id="pgn_editar_cliente"  data-role="page" >		  
+	 <ion-header translucent="true"   >
+		<ion-toolbar   color="secondary">
+		  <ion-title class="md title-md hydrated"> <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>   Editar CLiente</ion-title>
+		</ion-toolbar>
+	  </ion-header>		  				 			  
+		<input class="inputtext"  type="hidden"    id="CLIE_ID"  value="">
+		<ion-content fullscreen=""  >	
+			<div id="content_pgn_editar_cliente" class="content_paginas">		   		
+			 <!--ion-list class="md list-md hydrated"-->		  
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->						
+				<label> Nome<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"    id="CLIE_NOME"  required>
+			   <!--/ion-item-->				
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Sexo:</label>
+				<select id="CLIE_SEXO_ID">							  
+				  <option value="">Selecione...</option>
+				  <option value="2">Feminino</option>
+				  <option value="1">Masculino</option>	
+				</select>            
+			   <!--/ion-item-->				
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Nascimento<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="date"   id="CLIE_DATA_NASCIMENTO"  >	            
+			   <!--/ion-item-->					
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Profissão<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="CLIE_PROFISSAO" >	
+			   <!--/ion-item-->				
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Estado Civil<span style="color:red;">*</span>:</label>
+				<select id="CLIE_ESTADO_CIVIL_ID">	
+					<option value="">Selecione...</option>						  
+					<option value="1">Casado</option>
+					<option value="2">Divorciado</option>
+					<option value="3">Solteiro</option>
+				</select>
+			   <!--/ion-item-->					
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Cidade<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="CLIE_CIDADE" >	
+			  <!--/ion-item-->					
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Estado<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="CLIE_ESTADO" >
+			   <!--/ion-item-->					
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>País<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="CLIE_PAIS" >	
+			   <!--/ion-item-->					
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+				<label>Estabelecimento<span style="color:red;">*</span>:</label>								
+				
+					<select  id="CLIE_ESTABELECIMENTO_ID">
+						<option>selecione..</option>
+					</select>
+				
+			
+			   <!--/ion-item-->				
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->
+					
+				<ion-button color="secondary" expand="block" size="medium"  id="btn_editar_cliente">Salvar</ion-button> 													
+					<ion-button color="light" expand="block"  size="medium" onclick="irPara('pgn_listar_cliente');" id="btn_fechar_cadastro_cliente">Cancelar</ion-button> 	
+			   <!--/ion-item-->									
+			 <!--/ion-list-->
+			 </div>		  					
+		  </ion-content>		  				
+	</div>	  
+	  <!-- PAGINA LISTAR CLIENTES -->
+	  <div id="pgn_listar_cliente"  data-role="page" >	  	  
+ 		 <ion-header translucent="true"   >
+            <ion-toolbar   color="secondary">
+              <ion-title class="md title-md hydrated"> <ion-icon name="menu" onclick="openFirst()" size="large"></ion-icon>Clientes Cadastrados:</ion-title>
+            </ion-toolbar>
+          </ion-header>			 
+		  <ion-content fullscreen="" >	
+		  <div id="painel_escolhas" style="display:none;">
+				<ion-card color="secondary">
+				  <ion-card-header>					
+					<ion-card-title>Opções <div id="client_name"></div></ion-card-title>
+				  </ion-card-header>
+				    <ion-card-content>											
+						<ion-button color="light" expand="block" onclick="mostrar_cliente_edicao()"><ion-icon name="brush"></ion-icon> Editar</ion-button>
+						<ion-button color="light"  expand="block"  onclick="irPara('pgn_cadastrar_anamnese')"><ion-icon name="git-network"></ion-icon> Avaliar</ion-button>
+						<ion-button color="danger" expand="block"  onclick="confirma_exclusao();"><ion-icon name="trash"></ion-icon> Excluir</ion-button>
+						<ion-button color="medium" expand="block"  onclick="$('#painel_escolhas').hide();"><ion-icon name="close"></ion-icon> Cancelar</ion-button>																																			
+					</ion-card-content>			  
+			  </ion-card>
+			  </div>
+		  <ion-list class="md list-md hydrated">				
+				<div id="lista_clientes" >					
+				</div>
+		   </ion-list>                  
+		  </ion-content>
+		  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+			<ion-fab-button color="secondary"  id="btn_control_cliente" onclick="irPara('pgn_cadastrar_cliente');" >
+				<ion-icon name="add" ></ion-icon>
+			</ion-fab-button>
+		  </ion-fab>				  		  	 
+	  </div>	    
+ <!-- PAGINA CADASTRAR CLIENTE -->	  
+  <div id="pgn_cadastrar_cliente"  data-role="page" >		  
+	 <ion-header translucent="true"   >
+		<ion-toolbar   color="secondary">
+		  <ion-title class="md title-md hydrated"> <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>   Cadastro de CLientes</ion-title>
+		</ion-toolbar>
+	  </ion-header>		  				 			  
+		  <input class="inputtext"  type="hidden"    id="campo_id_cliente"  value="">
+		<ion-content fullscreen=""  >
+			<div id="content_pgn_cadastrar_cliente" class="content_paginas">				   		
+			 <!--ion-list class="md list-md hydrated"-->			  
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->							
+				<label> Nome<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"    id="campo_nome_cliente"  required>
+			   <!--/ion-item-->						
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Sexo:</label>
+				<select id="campo_sexo_cliente">							  
+				  <option value="">Selecione...</option>
+				  <option value="2">Feminino</option>
+				  <option value="1">Masculino</option>	
+				</select>            
+			   <!--/ion-item-->					
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Nascimento<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="date"   id="campo_data_nasc_cliente"  >	            
+			   <!--/ion-item-->						
+			 <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Profissão<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="campo_profissao_cliente" >	
+			   <!--/ion-item-->						
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Estado Civil<span style="color:red;">*</span>:</label>
+				<select id="campo_estado_civil_cliente">
+					<option value="">Selecione...</option>								  
+					<option value="1">Casado</option>
+					<option value="2">Divorciado</option>
+					<option value="3">Solteiro</option>
+				</select>
+			   <!--/ion-item-->						
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Cidade<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="campo_cidade_cliente" >	
+			   <!--/ion-item-->						
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Estado<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="campo_estado_cliente" >
+			   <!--/ion-item-->					
+			 <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>País<span style="color:red;">*</span>:</label>
+				<input class="inputtext"  type="text"   id="campo_pais_cliente" >	
+			   <!--/ion-item-->						
+			  <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+				<label>Estabelecimento<span style="color:red;">*</span>:</label>
+				<select id="campo_estabelecimento_cliente">	
+					<option value="">Selecione...</option>
+				</select>
+			   <!--/ion-item-->						
+			   <!--ion-item class="item md in-list ion-focusable hydrated item-label"-->	
+					<ion-button color="secondary" expand="block" size="medium"  id="btn_cadastrar_cliente">Cadastrar</ion-button> 													
+					<ion-button color="light" expand="block"  size="medium" onclick="irPara('pgn_listar_cliente');" id="btn_fechar_cadastro_cliente">Cancelar</ion-button> 	
+			   <!--/ion-item-->											
+			 <!--/ion-list-->	
+			</div> 		  					
+		  </ion-content>		  				
+	</div>
+	<!--PAGINA LISTAR ESTABELECIMENTOS--> 
+	<div data-role="page" id="pgn_lista_estabelecimento">
+	 		<ion-header translucent="true"   >
+            <ion-toolbar   color="secondary">
+              <ion-title class="md title-md hydrated"> <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>Estabelecimentos Cadastrados</ion-title>
+            </ion-toolbar>
+          </ion-header>	
+	          	<ion-fab vertical="bottom" horizontal="left bottom" slot="fixed">
+				  	<ion-fab-button color="danger" onclick="irPara('pgn_listar_cliente');">
+		          		<ion-icon name="arrow-round-back"></ion-icon>
+		        	</ion-fab-button>
+			  	</ion-fab>
+			  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+				<ion-fab-button color="secondary"  id="btn_control_estabelecimento" onclick="irPara('pgn_estabelecimento');"  >
+					<ion-icon name="add" ></ion-icon>
+				</ion-fab-button>
+			  </ion-fab>		  
+			<ion-content fullscreen="" >	
+				<ion-list class="md list-md hydrated">
+					<div id="lista_estabelecimentos" >					
+					</div>
+					</ion-list>
+			</ion-content>		  		
+	</div>			
+	<!--PAGINA CADASTRAR ESTABELECIMENTOS--> 
+	<div data-role="page" id="pgn_estabelecimento">
+ 		<ion-header translucent="true"   >
+            <ion-toolbar   color="secondary">
+              <ion-title class="md title-md hydrated"> <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>Estabelecimentos</ion-title>
+            </ion-toolbar>
+          </ion-header>												  
+				<ion-content fullscreen="">	
+					<div id="content_pgn_estabelecimento" class="content_paginas">		   		
+						<!--ion-list class="md list-md hydrated"-->		  
+						  <!--ion-item class="item md in-list ion-focusable hydrated item-label"--> 										
+							<label>Estabelecimento<span style="color:red;">* </span>:</label>
+							<input class="inputtext"  type="text"   id="campo_nome_estabelecimento"  >	
+						  <!--/ion-item--> 
+						<!--ion-item--> 
+							<ion-button color="secondary" expand="block"  id="btn_cadastrar_estabelecimento">Cadastrar</ion-button> 
+							<ion-button color="warning" expand="block" onclick="irPara('pgn_lista_estabelecimento');"  >Cancelar</ion-button> 
+						<!--/ion-item--> 
+						<!--/ion-list--> 
+					</div>
+				</ion-content>															 				  				  							
+	</div>	  	
+	<!--PAGINA LISTAR PERFIL--> 
+	<div id="pgn_listar_perfil"  data-role="page" >
+		<ion-header translucent="true"   >
+			<ion-toolbar   color="secondary">
+			<ion-title class="md title-md hydrated"> <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>Perfis Cadastrados</ion-title>
+			</ion-toolbar>
+        </ion-header>
+          	<ion-fab vertical="bottom" horizontal="left bottom" slot="fixed">
+			  	<ion-fab-button color="danger" onclick="irPara('pgn_listar_cliente');">
+	          		<ion-icon name="arrow-round-back"></ion-icon>
+	        	</ion-fab-button>
+		  	</ion-fab>	
+		  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+			<ion-fab-button color="secondary"  id="btn_control_perfil"  onclick="irPara('cadastrar_perfil');">
+				<ion-icon name="add" ></ion-icon>
+			</ion-fab-button>
+		  </ion-fab>		
+			<ion-content fullscreen="" >				
+				<ion-list class="md list-md hydrated">
+					<div id="tbody_profile" >					
+					</div>	
+				</ion-list>				
+			</ion-content>		
+	</div>	
+	  <!--PAGINA CADASTRAR PERFIL--> 
+	  <div id="cadastrar_perfil"  data-role="page"color="secondary" >
+		<ion-header translucent="true"   >
+			<ion-toolbar   color="secondary">
+			<ion-title class="md title-md hydrated"> <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>Perfil</ion-title>
+			</ion-toolbar>
+        </ion-header>	
+            <ion-fab vertical="bottom" horizontal="left bottom" slot="fixed">
+			  	<ion-fab-button color="danger" onclick="irPara('pgn_listar_cliente');">
+	          		<ion-icon name="arrow-round-back"></ion-icon>
+	        	</ion-fab-button>
+		  	</ion-fab>			
+		  <ion-content fullscreen=""  -->
+				<!--ion-list-->
+					<!--ion-item-->
+					<div id="content_cadastrar_perfil" class="content_paginas">
+						<input class="inputtext"  type="hidden" id="field-id-perfil" value="" >
+						 <label >Nome </label>
+						<input class="inputtext"  type="text" readonly="readonly"   id="field-name-profile"  >
+					<!--/ion-item--> 
+					<!--ion-item-->
+						 <label >Telefone</label>
+						<input class="inputtext"  type="text"    id="field-phone-profile" placeholder="(99)99999-9999" >
+					<!--/ion-item--> 
+					<!--ion-item-->
+						 <label >E-mail</label>
+						<input class="inputtext"  type="text"    id="field-mail-profile" placeholder="email@email.com" >						
+					<!--/ion-item-->  
+					<!--ion-item-->					 
+						 <label >Número de Registro </label>
+						<input class="inputtext"  type="text" readonly="readonly"    id="field-register-profile" placeholder="BA-0000108" >						
+					<!--/ion-item-->
+					<!--ion-item-->						
+						<label >Cidade:</label>
+						<input class="inputtext"  type="text" readonly="readonly" id="field-city-profile"    placeholder="SALVADOR-BA" >						
+					<!--/ion-item--> 
+					<!--ion-item-->					  
+						 <label >Assinatura Digital </label>
+						<input class="inputtext"  type="text"    id="field-asign-profile">
+					</div>	
+					<!--/ion-item-->
+				<!--/ion-list-->								
+		  </ion-content>			
+	</div>		
+		<!--PAGINA ANAMNESE--> 	
+	<div id="pgn_cadastrar_anamnese" data-role="page"  >
+ 		 <ion-header translucent="true"   >
+            <ion-toolbar color="secondary"> 
+			 <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>
+			<center><div style="margin-top: -9%">Avaliação Pré Participação</div></center>
+				
+				<div style="margin-top: 5%">
+					<ion-button size="medium" style="width: 32%; margin: 1% 0% 1% 0%" expand="block" color="secondary"> ANAMNESE</ion-button>
+					<ion-button id="btn_anamnese_ir_parq" size="medium" style="width: 32%;margin:-11% 0% 0% 34%" expand="block" onclick="irPara('pgn_cadastrar_parq');"  color="secondary" > PAR-Q</ion-button>
+					<ion-button size="medium" style="width: 32%;margin:-10% 0% 0% 68%"  expand="block" color="secondary" onclick="irPara('pgn_cadastrar_risco');" > RISCO</ion-button>
+				</div>
+            </ion-toolbar>
+          </ion-header>		  		  			  			  		 
+			<ion-content fullscreen="" color="secondary" style="" >	
+				<div id="content_cadastrar_anamnese" class="content_paginas">			
+					<input class="inputtext"  type="hidden"    id="ANAM_ID"  value="">	
+				<!--ion-list class="md list-md hydrated" color="secondary">			  
+				  <ion-item class="item md in-list ion-focusable hydrated item-label"-->						
+					<center><label><b>Antecedente Pessoal</b></label></center></br>		
+					<center><label>Principais relatos de ordem clínica	</label></center>	
+					</br>			  
+				  <!--/ion-item>					
+				  </ion-list-->	
+				  	<div style="width: 100%; border-top: 1px solid white; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Alguma patologia que tem conhecimento?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" id="ANAM_FLAG_POSSUI_PATOLOGIA" checked name="ANAM_FLAG_POSSUI_PATOLOGIA" value="0" onclick="$('#id_quais_patologias').hide();" style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="ANAM_FLAG_POSSUI_PATOLOGIA" name="ANAM_FLAG_POSSUI_PATOLOGIA" value="1"  onclick="$('#id_quais_patologias').show();$('#ANAM_PATOLOGIA').attr('required',true);" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_quais_patologias" style="display:none;">
+							<label>Qual?</label>
+							<textarea id="ANAM_PATOLOGIA" rows="3" placeholder="Qual?" ></textarea>	
+						</div>	
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Medicação em uso?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_quais_medicamentos').hide();" id="ANAM_FLAG_USA_MEDICACAO" name="ANAM_FLAG_USA_MEDICACAO" checked value="0" style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_quais_medicamentos').show();$('#ANAM_MEDICACAO').attr('required',true);" id="ANAM_FLAG_USA_MEDICACAO"  name="ANAM_FLAG_USA_MEDICACAO" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_quais_medicamentos" style="display:none;">
+							<label>Qual?</label>
+							<textarea id="ANAM_MEDICACAO" rows="3" placeholder="Qual?" ></textarea>	
+						</div>	
+				  	</div>	
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Cirurgias, Fraturas ou internamento nos últimos 6 meses?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_qual_tipo_fratura').hide();"id="ANAM_FLAG_CIRURGIA_FRATURA" name="ANAM_FLAG_CIRURGIA_FRATURA" checked value="0" style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_qual_tipo_fratura').show();$('#ANAM_CIRURGIA_FRATURA').attr('required',true);" id="ANAM_FLAG_CIRURGIA_FRATURA" name="ANAM_FLAG_CIRURGIA_FRATURA" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_qual_tipo_fratura" style="display:none;">
+							<label>Qual tipo?</label>
+							<textarea id="ANAM_CIRURGIA_FRATURA" rows="3" placeholder="Qual tipo?" ></textarea>	
+						</div>	
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Relato de dor?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_qual_dor').hide();" id="ANAM_FLAG_RELATA_DOR" 
+						name="ANAM_FLAG_RELATA_DOR" value="0" checked style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_qual_dor').show();$('#ANAM_DOR').attr('required',true);" id="ANAM_FLAG_RELATA_DOR" name="ANAM_FLAG_RELATA_DOR" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_qual_dor" style="display:none;">
+							<label>Onde?</label>
+							<textarea id="ANAM_DOR" rows="3" placeholder="Onde?" ></textarea>	
+						</div>	
+				  	</div>	
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Hábito de fumar?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_select_fumo').hide();" id="ANAM_FLAG_HABITO_FUMAR" name="ANAM_FLAG_HABITO_FUMAR" checked value="0" style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_select_fumo').show();$('#campo_tempo_fumo_anamnese').attr('required',true);" id="ANAM_FLAG_HABITO_FUMAR" name="ANAM_FLAG_HABITO_FUMAR" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_select_fumo" style="display:none;">
+							<label>Quantos cigarros/dia?</label>
+							<select id="ANAM_TABAGISMO_ENUM">	
+								<option value="1">Até 10 </option>
+								<option value="2">De 11 a 20 </option>
+								<option value="4">De 21 a 30 </option>
+								<option value="6">De 31 a 40 </option>
+								<option value="10">Acima de 40 </option>
+							</select>
+						</div>	
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Alguma alergia?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_qual_alergia').hide();" id="ANAM_FLAG_POSSUI_ALERGIA" name="ANAM_FLAG_POSSUI_ALERGIA" checked value="0" style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_qual_alergia').show();$('#ANAM_ALERGIA').attr('required',true);" id="ANAM_FLAG_POSSUI_ALERGIA"  name="ANAM_FLAG_POSSUI_ALERGIA" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_qual_alergia" style="display:none;">
+							<label>Qual?</label>
+							<textarea id="ANAM_ALERGIA" rows="3" placeholder="Qual?" ></textarea>
+						</div>	
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+						<label>Tipos de alimentação</label>
+						<textarea id="ANAM_TIPO_ALIMENTACAO" rows="5" ></textarea>
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+						<label>Atividade física</label>
+						<textarea id="ANAM_ATIVIDADE_FISICA" rows="5" ></textarea>
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+						<label>Comportamento sedentário</label>
+						<textarea id="ANAM_COMPORTAMENTO_SEDENTARIO" rows="5" ></textarea>
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+						<label>Qual seu objetivo?</label>
+						<textarea id="ANAM_QUAL_OBJETIVO" rows="5" ></textarea>
+				  	</div>
+				  	</br>
+					<center><label><b>Antecedente Familiar</b></label></center></br>		
+					<center><label>(Pai/ Mãe/ Avós)</label></center>	
+					</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Diabetes?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_diabete').hide();" id="ANAM_FLAG_PARENTE_DIABETE" name="ANAM_FLAG_PARENTE_DIABETE" value="0" checked style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_diabete').show();$('#ANAM_PARENTE_DIABETE').attr('required',true);" id="ANAM_FLAG_PARENTE_DIABETE" name="ANAM_FLAG_PARENTE_DIABETE" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_diabete" style="display:none;">
+							<label>Quem /qual tipo?</label>
+							<textarea id="ANAM_PARENTE_DIABETE" rows="3" placeholder="Quem /qual tipo?" ></textarea>
+						</div>	
+				  	</div>
+					</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Doença arterial coronariana - DAC ?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_quem_DAC').hide();" id="ANAM_FLAG_PARENTE_DAC" name="ANAM_FLAG_PARENTE_DAC" value="0" checked style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_quem_DAC').show();$('#ANAM_PARENTE_DAC').attr('required',true);" id="ANAM_FLAG_PARENTE_DAC"  name="ANAM_FLAG_PARENTE_DAC" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_quem_DAC" style="display:none;">
+							<label>Quem ?</label>
+							<textarea id="ANAM_PARENTE_DAC" rows="3" placeholder="Quem ?" ></textarea>
+						</div>	
+				  	</div>
+					</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Acidente Vascular Cerebral - AVC ?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_quem_AVC').hide();" id="ANAM_FLAG_PARENTE_AVC" name="ANAM_FLAG_PARENTE_AVC" value="0" checked style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_quem_AVC').show();$('#ANAM_PARENTE_AVC').attr('required',true);" id="ANAM_FLAG_PARENTE_AVC" name="ANAM_FLAG_PARENTE_AVC" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_quem_AVC" style="display:none;">
+							<label>Quem ?</label>
+							<textarea id="ANAM_PARENTE_AVC" rows="3" placeholder="Quem ?" ></textarea>
+						</div>	
+				  	</div>
+					</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white; ">
+				  		<div style="width: 80%">
+				  			<label style="margin-top: 10%;">Infarto Agudo do Miocárdio ?</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -10% 0% 0% 85%">
+					  		<input type="radio" onclick="$('#id_quem_MIOC').hide();" id="ANAM_FLAG_PARENTE_IAM" name="ANAM_FLAG_PARENTE_IAM" checked value="0" style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" onclick="$('#id_quem_MIOC').show();$('#ANAM_PARENTE_IAM').attr('required',true);" id="ANAM_FLAG_PARENTE_IAM" name="ANAM_FLAG_PARENTE_IAM" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>
+						<div id="id_quem_MIOC" style="display:none;">
+							<label>Quem ?</label>
+							<textarea id="ANAM_PARENTE_IAM" rows="3" placeholder="Quem ?" ></textarea>
+						</div>	
+				  	</div>
+					<ion-button id="btn_salvar_anamnese" color="secondary" expand="block">Salvar dados</ion-button>
+				</div> 
+				  <!--/ion-item>
+				</ion-list-->			
+			  	</ion-content>			  
+	</div>
+				
+	<div id="pgn_cadastrar_risco" data-role="page" >
+		<ion-header translucent="true">
+			<ion-toolbar   color="secondary"> 
+				 <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>
+				<center><div style="margin-top: -9%">Avaliação Pré Participação</div></center>
+
+				<div style="margin-top: 5%">
+					<ion-button size="medium" style="width: 32%; margin: 1% 0% 1% 0%" expand="block" color="secondary" onclick="irPara('pgn_cadastrar_anamnese');" > ANAMNESE</ion-button>
+					<ion-button size="medium" style="width: 32%;margin:-11% 0% 0% 34%" expand="block"  color="secondary"onclick="irPara('pgn_cadastrar_parq');" > PAR-Q</ion-button>
+					<ion-button size="medium" style="width: 32%;margin:-10% 0% 0% 68%"  expand="block" color="secondary" > RISCO</ion-button>
+				</div>
+			</ion-toolbar>
+		</ion-header>		
+		<ion-content fullscreen="" color="secondary">								  		  				
+				
+			<input class="inputtext"  type="hidden"    id="RISC_ID"  value="">	
+			<center><label><b>Risco Cardiovascular</b></label></center></br>			
+			</br>	
+				
+			<div id="content_cadastrar_anamnese" class="content_paginas">	
+
+				<div style="width: 95%; border-top: 1px solid white; border-bottom: 1px solid white;position: absolute;">							  
+					<label >Idade: </label>
+					<select id="idade_enum" disabled="disabled">							  
+					  <option value="1">De 10 a 20</option>
+					  <option value="2">De 21 a 30</option>
+					  <option value="3">De 31 a 40</option>
+					  <option value="4">De 41 a 50</option>
+					  <option value="6">De 51 a 60</option>
+					  <option value="8">Acima de 60</option>
+					</select>  		 
+				</div>
+				
+				<div style="margin-top:25%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Herança Familiar</label>
+					<select id="RISC_HERANCA_FAMILIAR_ENUM">							  
+					  <option value="1">Nenhum parente cardiopata</option>
+					  <option value="2">Um parente cardiopata</option>
+					  <option value="3">Dois parentes cardiopatas</option>
+					  <option value="7">Três parentes cardiopatas</option>
+					  <option value="7">Quatro parentes cardiopatas</option>
+					  <option value="7">Cinco parentes cardiopatas</option>
+					</select>  		
+				</div>	
+			
+				<div style="margin-top:50%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Circuferência da cintura</label>
+					<div id="cintura_masculina" style="display:none;">
+						<select id="RISC_CIRC_CINTURA_MASCULINA_ENUM">							  
+						  <option value="0">Menor que 94cm</option>
+						  <option value="2">Entre 94 e 102cm</option>
+						  <option value="4">Maior que 102cm</option>
+						  
+						</select>  
+					</div>
+					<div id="cintura_feminina" style="display:none;">
+						<select id="RISC_CIRC_CINTURA_FEMININA_ENUM">							  
+						  <option value="0">Menor que 80cm</option>
+						  <option value="2">Entre 80 e 88cm</option>
+						  <option value="4">Maior que 88cm</option>
+						</select>  							
+					</div>
+				</div>
+				
+				<div style="margin-top:75%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Tabagismo</label>							      				
+					<select id="SEL_RISC_TABAGISMO" disabled="disabled" >							
+					  	<option value="0">Não Fuma</option>
+						<option value="1">Até 10 </option>
+						<option value="2">De 11 a 20 </option>
+						<option value="3">De 21 a 30 </option>
+						<option value="4">De 31 a 40 </option>
+						<option value="5">Acima de 40 </option>
+					</select> 			
+				</div>
+				
+				<div style="margin-top:100%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Atividade física minutos por semana</label>
+					<select id="RISC_ATIVIDADE_FISICA_SEMANAL_ENUM">							  
+					  <option value="0">Acima de 240 minutos</option>
+					  <option value="1">De 120 a 240 minutos</option>
+					  <option value="2">De 80 a 119 minutos</option>
+					  <option value="3">De 60 a 79 minutos</option>
+					  <option value="6">De 31 a 59 minutos</option>
+					  <option value="8">Abaixo de 30 minutos</option>
+					</select>  
+				</div>			
+				
+				<div style="margin-top:125%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Colesterol</label>
+					<select id="RISC_COLESTEROL_ENUM">							  
+					  <option value="1">Abaixo de 180</option>
+					  <option value="2">De 181 a 205</option>
+					  <option value="3">De 206 a 230</option>
+					  <option value="4">De 231 a 255</option>
+					  <option value="5">De 256 a 280</option>
+					  <option value="7">Acima de 280</option>
+					</select>  			
+				</div>
+			
+				<div style="margin-top:150%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Pressão Arterial Sistólica</label>
+					<select id="RISC_PRESSAO_SISTOLICA_ENUM">							  
+					  <option value="1">De 110 a 119mmHg</option>
+					  <option value="2">De 120 a 139mmHg</option>
+					  <option value="3">De 140 a 159mmHg</option>
+					  <option value="4">De 160 a 179mmHg</option>
+					  <option value="6">De 180 a 200mmHg</option>
+					  <option value="8">Acima de 200mmHg</option>
+					</select>  			
+				</div>
+				
+				<div style="margin-top:175%; width: 95%; border-bottom: 1px solid white; position: absolute;">
+					<label>Pressão Arterial Diastólica</label>
+					<select id="RISC_PRESSAO_DIASTOLICA_ENUM">							  
+					  <option value="1">Abaixo de 70mmHg</option>
+					  <option value="2">De 71 a 76mmHg</option>
+					  <option value="3">De 77 a 82mmHg</option>
+					  <option value="4">De 83 a 93mmHg</option>
+					  <option value="6">De 94 a 105mmHg</option>
+					  <option value="8">Acima de 105mmHg</option>
+					</select> 
+				</div>		
+				
+				<div style="margin-top:200%; width: 95%; border-bottom: 1px solid white; position: absolute;height: 30%">
+					<ion-button id="btn_salvar_risco" onclick="cadastrar_RISCO()" color="secondary" expand="block">Salvar dados</ion-button> 	
+				</div>
+			</div>	
+		</ion-content>
+	</div>	
+
+	  		<!--PAGINA AVALIAÇÃO-->
+	  <div id="pgn_avaliacao"  data-role="page" >
+		<ion-header translucent="true">
+			<ion-toolbar  color="secondary">
+				<ion-title class="md title-md hydrated">
+					<ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>
+					Avaliação
+				</ion-title>
+			</ion-toolbar>
+        </ion-header>	
+            <ion-fab vertical="bottom" horizontal="left bottom" slot="fixed">
+			  	<ion-fab-button color="danger" onclick="irPara('pgn_listar_cliente');">
+	          		<ion-icon name="arrow-round-back"></ion-icon>
+	        	</ion-fab-button>
+		  	</ion-fab>			
+		  <ion-content fullscreen=""  color="secondary">
+		  <ion-list class="md list-md hydrated" color="secondary">
+					<ion-item class="item ios in-list ion-focusable item-label hydrated">
+						<h1><div id="h1_avaliacao"></div></h1>
+					</ion-item>	
+					<ion-item class="item ios in-list ion-focusable item-label hydrated">
+						<div id="pgn_avaliacao_status">	 
+						</div>
+					</ion-item>						
+					<ion-item class="item ios in-list ion-focusable item-label hydrated">
+						<div id="pgn_avaliacao_conduta">
+						</div>
+					</ion-item>						
+					<ion-item class="item ios in-list ion-focusable item-label hydrated">
+						<div id="pgn_avaliacao_anamnese">	 
+						</div>
+					</ion-item>	
+				  	<ion-item class="item ios in-list ion-focusable item-label hydrated">
+						<div id="pgn_avaliacao_parq">					
+						</div>	
+					</ion-item>	
+					<ion-item class="item ios in-list ion-focusable item-label hydrated">
+						<div id="pgn_avaliacao_risco">
+						</div>	
+					</ion-item>	
+		  </ion-list>
+	 		  
+		</ion-content>
+		
+	  </div>
+ 								
+	<div id="pgn_cadastrar_parq" data-role="page" >
+		<ion-header translucent="true">
+            <ion-toolbar   color="secondary"> 
+				 <ion-icon name="arrow-back" onclick="irPara('pgn_listar_cliente')" size="large"></ion-icon>
+				<center><div style="margin-top: -9%">Avaliação Pré Participação</div></center>
+				
+				<div style="margin-top: 5%">
+					<ion-button size="medium" style="width: 32%; margin: 1% 0% 1% 0%" expand="block" color="secondary" onclick="irPara('pgn_cadastrar_anamnese');" > ANAMNESE</ion-button>
+					<ion-button size="medium" style="width: 32%;margin:-11% 0% 0% 34%" expand="block"  color="secondary"> PAR-Q</ion-button>
+					<ion-button size="medium" style="width: 32%;margin:-10% 0% 0% 68%"  expand="block" color="secondary" onclick="irPara('pgn_cadastrar_risco');"  > RISCO</ion-button>
+				</div>
+	            </ion-toolbar>
+		</ion-header>		  		  			
+			<ion-content fullscreen=""  color="secondary">	
+				<div id="content_cadastrar_anamnese" class="content_paginas">			
+					<input class="inputtext"  type="hidden"    id="ANAM_ID"  value="">	
+					<input class="inputtext"  type="hidden"    id="parq_id"  value="">	
+				<!--ion-list class="md list-md hydrated" color="secondary">			  
+				  <ion-item class="item md in-list ion-focusable hydrated item-label"-->						
+					<center><label><b>Questionário PARQ</b></label></center></br>			
+					</br>			  
+				  <!--/ion-item>					
+				  </ion-list-->	
+				  	<div style="width: 100%; border-top: 1px solid white; border-bottom: 1px solid white;height: 22% ; position: absolute;">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 10%;">Alguma vez foi mencionado que você tem 
+									algum problema cardíaco ou que só poderá 
+									fazer atividade física com recomendação médica?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -20% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_possui_problema_cardiaco" name="parq_flag_possui_problema_cardiaco" value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="parq_flag_possui_problema_cardiaco" name="parq_flag_possui_problema_cardiaco" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white;height: 17% ; position: absolute;margin-top:22%">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 13%;">Você sente dor ou desconforto no peito quando faz atividades físicas?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -13% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_sente_dor_exercicio" name="parq_flag_sente_dor_exercicio" value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" oncheck="alert()"  id="parq_flag_sente_dor_exercicio" name="parq_flag_sente_dor_exercicio" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	</br>
+				  	<div style="width: 100%; border-bottom: 1px solid white;height: 17% ; position: absolute;margin-top:36%">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 13%;">Nos últimos meses você tem sentido dor ou desconforto no peito mesmo sem fazer atividades físicas?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -17% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_ult_meses_sente_dor_exercicio"  name="parq_flag_ult_meses_sente_dor_exercicio" value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="parq_flag_ult_meses_sente_dor_exercicio"  name="parq_flag_ult_meses_sente_dor_exercicio" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	<div style="width: 100%; border-bottom: 1px solid white;height: 17% ; position: absolute;margin-top:55%">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 13%;">Você perde o equilíbrio em virtude de tonturas ou alguma vez já ficou inconsciente?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -17% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_perde_equilibrio"  name="parq_flag_perde_equilibrio"  value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="parq_flag_perde_equilibrio"  name="parq_flag_perde_equilibrio" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	<div style="width: 100%; border-bottom: 1px solid white;height: 17% ; position: absolute;margin-top:75%">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 13%;">Você tem problemas ósseos, articulares ou de coluna que pioram quando pratica atividades físicas?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -17% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_problemas_osseos_artic_coluna"  name="parq_flag_problemas_osseos_artic_coluna" value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="parq_flag_problemas_osseos_artic_coluna"  name="parq_flag_problemas_osseos_artic_coluna" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	<div style="width: 100%; border-bottom: 1px solid white;height: 17% ; position: absolute;margin-top:95%">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 13%;">Seu médico já prescreveu medicamentos para pressão arterial ou problemas cardíacos?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -17% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_medico_pres_medicamento" name="parq_flag_medico_pres_medicamento" value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="parq_flag_medico_pres_medicamento" name="parq_flag_medico_pres_medicamento" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	<div style="width: 100%; border-bottom: 1px solid white;height: 17% ; position: absolute;margin-top:115%">
+				  		<div style="width: 75%">
+				  			<label style="margin-top: 13%;">Você tem qualquer outra razão conhecida para não praticar atividades físicas?
+							</label>
+				  		</div>
+					  	<div style="width: 30%;margin: -17% 0% 0% 85%">
+					  		<input type="radio" id="parq_flag_outra_razao_nao_praticar_ativ" name="parq_flag_outra_razao_nao_praticar_ativ" value="0"  style="margin: -2% 0% 0% -34%;" />
+					  		<label>Não</label>
+					  		<input type="radio" id="parq_flag_outra_razao_nao_praticar_ativ" name="parq_flag_outra_razao_nao_praticar_ativ" value="1" style="margin: -2% 0% 0% -34%;"  />
+					  		<label>Sim</label>
+					  	</div>	
+				  	</div>
+				  	<div style="margin-top:155%">
+				  		<ion-button id="btn_salvar_parq" color="secondary" expand="block">Salvar dados</ion-button>
+				  	</div>	
+				</div>  				
+				<!--ion-list class="md list-md hydrated" color="secondary">	
+				<input class="inputtext"  type="hidden"    id="parq_id"  value="">	
+				  <ion-item class="item md in-list ion-focusable hydrated item-label">						
+					<ion-label><ion-title class="md title-md hydrated"><b> <font size="3">Questionário PAR-Q </font></ion-title></ion-label>					  					  
+				  </ion-item>					
+				  </ion-list>	
+				<ion-list class="md list-md hydrated" color="secondary">	
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" 
+								class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
+									<span style="color:red;">* </span>
+									Alguma vez foi mencionado que você tem 
+									algum problema cardíaco ou que só poderá 
+									fazer atividade física com recomendação médica?
+							</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_possui_problema_cardiaco" name="parq_flag_possui_problema_cardiaco" slot="start" color="secondary" value="0" checked="" role="radio" aria-checked="false" aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio value="1" id="parq_flag_possui_problema_cardiaco" name="parq_flag_possui_problema_cardiaco"  slot="start" color="danger"  role="radio"  aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>	
+					
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated"><span style="color:red;">* </span>Você sente dor ou desconforto no peito quando faz atividades físicas?</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_sente_dor_exercicio" name="parq_flag_sente_dor_exercicio" slot="start" color="secondary" value="0" checked="" role="radio" aria-checked="false" aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio  oncheck="alert()"  id="parq_flag_sente_dor_exercicio" name="parq_flag_sente_dor_exercicio" slot="start" color="danger"  value="1" role="radio" aria-checked="false" aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>	
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated"><span style="color:red;">* </span>Nos últimos meses você tem sentido dor ou desconforto no peito mesmo sem fazer atividades físicas?</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_ult_meses_sente_dor_exercicio" name="parq_flag_ult_meses_sente_dor_exercicio"  slot="start" color="secondary" value="0" checked="" role="radio" aria-checked="false" aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio   id="parq_flag_ult_meses_sente_dor_exercicio"  name="parq_flag_ult_meses_sente_dor_exercicio"  slot="start" color="danger" value="1" role="radio" aria-checked="false" aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>		
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated"><span style="color:red;">* </span>Você perde o equilíbrio em virtude de tonturas ou alguma vez já ficou inconsciente?</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_perde_equilibrio"  name="parq_flag_perde_equilibrio"   slot="start" color="secondary" value="0" checked="" role="radio" aria-checked="false" aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio   id="parq_flag_perde_equilibrio" name="parq_flag_perde_equilibrio"   slot="start" color="danger" value="1" role="radio" aria-checked="false" aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>	
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated"><span style="color:red;">* </span>Você tem problemas ósseos, articulares ou de coluna que pioram quando pratica atividades físicas?</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_problemas_osseos_artic_coluna"  name="parq_flag_problemas_osseos_artic_coluna"   slot="start" color="secondary" value="0" checked="" role="radio" aria-checked="false" aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio   id="parq_flag_problemas_osseos_artic_coluna" name="parq_flag_problemas_osseos_artic_coluna"   slot="start" color="danger" value="1" role="radio" aria-checked="false" aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>				
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated"><span style="color:red;">* </span>Seu médico já prescreveu medicamentos para pressão arterial ou problemas cardíacos?</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_medico_pres_medicamento" name="parq_flag_medico_pres_medicamento"   slot="start" color="secondary" value="0" checked="" role="radio"  aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio   id="parq_flag_medico_pres_medicamento" name="parq_flag_medico_pres_medicamento"  slot="start" color="danger" value="1" role="radio"  aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>		
+					<ion-radio-group role="radiogroup" aria-labelledby="ion-rg-1-lbl" class="ios hydrated">
+						<ion-list-header class="ios hydrated">
+							<ion-label id="ion-rg-1-lbl" class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated"><span style="color:red;">* </span>Você tem qualquer outra razão conhecida para não praticar atividades físicas?</ion-label>
+						</ion-list-header>				
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-1-lbl">NÃO</ion-label>
+							<ion-radio  id="parq_flag_outra_razao_nao_praticar_ativ" name="parq_flag_outra_razao_nao_praticar_ativ"   slot="start" color="secondary" value="0" checked="" role="radio" aria-checked="false" aria-labelledby="ion-rb-1-lbl" class="ion-color ion-color-tertiary ios in-item interactive hydrated"></ion-radio>
+						</ion-item>
+						<ion-item class="item ios in-list ion-focusable item-label hydrated">
+							<ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated" id="ion-rb-8-lbl">SIM</ion-label>
+							<ion-radio   id="parq_flag_outra_razao_nao_praticar_ativ"  name="parq_flag_outra_razao_nao_praticar_ativ"  slot="start" color="danger" value="1" role="radio" aria-checked="false" aria-labelledby="ion-rb-8-lbl" class="ion-color ion-color-success ios in-item interactive hydrated"></ion-radio>
+						</ion-item>											
+					</ion-radio-group>						
+				</ion-list>	
+				<ion-list class="md list-md hydrated" color="secondary">			  
+				  <ion-item class="item md in-list ion-focusable hydrated item-label">
+					<ion-button id="btn_salvar_parq" color="secondary" expand="block">Salvar dados</ion-button>													
+								 
+				  </ion-item>
+				  <ion-item class="item md in-list ion-focusable hydrated item-label">
+					
+				  </ion-item>
+				</ion-list-->										
+			  </ion-content>		  							
+	</div>	
+
+
+        <script src="js/main.js"></script>
+		<script src="js/BD.js"></script>
+		<script src="js/funcoes.js"></script>
+		<script src="js/login.js"></script>
+		<script src="js/menu.js"></script>
+		<script src="js/perfil.js"></script>
+		<script src="js/estabelecimento.js"></script>
+		<script src="js/cliente.js"></script>
+		<script src="js/anamnese.js"></script>
+		<script src="js/parq.js"></script>
+		<script src="js/risco.js"></script>
+		<script src="js/avaliacao_bkp.js"></script>		  
+	</ion-app>		 
+  </body>
+</html>
